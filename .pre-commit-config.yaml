@@ -1,20 +1,25 @@
+exclude: docs/
 repos:
-  - repo: https://github.com/pycqa/flake8
-    rev: '3.9.0'
+  - repo: local
     hooks:
       - id: flake8
-        additional_dependencies: 
-          - flake8-docstrings
-          - flake8-annotations
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v0.910'
-    hooks:
+        name: Flake8
+        entry: flake8
+        language: system
+        types: [python]
       - id: mypy
-        additional_dependencies:
-          - types-PyYAML
-          - types-waitress
-  - repo: https://github.com/psf/black
-    rev: 22.8.0
-    hooks:
+        name: Mypy
+        entry: mypy
+        language: system
+        types: [python]
+        exclude: tests
+      - id: pylint
+        name: Pylint
+        entry: pylint
+        language: system
+        types: [python]
       - id: black
-        language_version: python3.9
+        name: Black
+        entry: black
+        language: system
+        types: [python]
