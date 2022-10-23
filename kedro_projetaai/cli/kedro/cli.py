@@ -11,6 +11,8 @@ from kedro_projetaai.cli.constants import (
     ENTRY_POINTS,
 )
 
+from kedro_projetaai.utils.plugins import get_plugins
+
 
 @click.group()
 @click.pass_context
@@ -21,11 +23,7 @@ def projetaai(ctx: click.Context):
 
 def _import_plugins() -> Dict[str, ProjetaAiCLIPlugin]:
     # Imports CLI plugins and sorts them into dict keys <plugin_name> : <plugin_cli>
-    entry_points = importlib.metadata.entry_points()
-    plugins: Dict[str, Type[ProjetaAiCLIPlugin]] = {
-        plugin.name: plugin.load()
-        for plugin in entry_points.get(ENTRY_POINTS["CLI"], [])
-    }
+    plugins: Dict[str, ProjetaAiCLIPlugin] = get_plugins(ENTRY_POINTS["CLI"])
     return {name: plugin() for name, plugin in plugins.items()}
 
 
